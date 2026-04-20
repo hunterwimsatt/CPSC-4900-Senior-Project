@@ -1,0 +1,1054 @@
+ModelName,ModelID,RuleScenario,SMTCode,Output
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He stops to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert johnny_running_late)
+(assert buys_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's breakfast meeting unexpectedly ran long, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buying_coffee Bool)
+
+; Asserting the rule that if Johnny is running late, he will not buy coffee
+(assert (=> johnny_running_late (not buying_coffee)))
+
+; Asserting the scenario that Johnny's breakfast meeting ran long
+(assert (= johnny_running_late true))
+
+; Asserting the scenario that Johnny does not buy coffee
+(assert (= buying_coffee false))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's babysitter called in sick, Johnny is running late, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buy_coffee false))
+
+(assert (=> johnny_running_late (not buy_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He decides to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's appointment was scheduled at 9 AM. It's currently 9:15 AM, Johnny realizes he's late, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is not running late, but he decides not to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+
+(assert (= johnny_running_late false))
+(assert (= buy_coffee false))
+
+(assert (=> johnny_running_late (not buy_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is not running late, Johnny buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late false))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is caught in a traffic jam, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buying_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buying_coffee false))
+
+(assert (=> johnny_running_late (not buying_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's watch malfunctions, displaying wrong time, Johnny assumes he's late, he doesn't buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's train has been delayed by 5 minutes, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, and he pre-orders coffee from an app.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert johnny_running_late)
+(assert buys_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late and specifically plans to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+
+(assert (=> johnny_running_late (not buy_coffee)))
+(assert johnny_running_late)
+(assert buy_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: ""Johnny is running late. He buys coffee.""","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert johnny_running_late)
+(assert buys_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, but he buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buy_coffee true))
+
+(assert (=> johnny_running_late (not buy_coffee)))
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)
+(get-model)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He stops to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert johnny_running_late)
+(assert buys_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is on time, buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late false))
+(assert (= buys_coffee true))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is stuck in a long queue at the bank, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buy_coffee false))
+
+(assert (=> johnny_running_late (not buy_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, he buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert (and johnny_running_late buys_coffee))
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running 30 minutes behind schedule, Johnny does not stop at the coffee shop.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is in a meeting that overran by 20 minutes, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buying_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buying_coffee false))
+
+(assert (=> johnny_running_late (not buying_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, he stops to buy coffee","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert (and johnny_running_late buys_coffee))
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's bike tire punctured 10 minutes ago, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buying_coffee Bool)
+(assert (= johnny_running_late true))
+(assert (= buying_coffee false))
+(assert (=> johnny_running_late (not buying_coffee)))
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He decides to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late and buys coffee on a whim.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert (and johnny_running_late buys_coffee))
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert johnny_running_late)
+(assert buys_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's alarm didn't go off, he's 15 minutes late, coffee shop is halfway through his commute.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buy_coffee false))
+
+(assert (=> johnny_running_late (not buy_coffee)))
+
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (=> johnny_running_late (not buys_coffee)))
+(assert johnny_running_late)
+(assert buys_coffee)
+
+(check-sat)",unsat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's car broke down 15 minutes ago, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buy_coffee Bool)
+(assert (= johnny_running_late true))
+(assert (= buy_coffee false))
+(assert (=> johnny_running_late (not buy_coffee)))
+(check-sat)",sat
+Dolphin-2.9.1-Yi-1.5-34B,dphn/dolphin-2.9.1-yi-1.5-34b,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's flight is delayed by 45 minutes, he does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= buys_coffee false))
+
+(assert (=> johnny_running_late (not buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He stops to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's breakfast meeting unexpectedly ran long, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's babysitter called in sick, Johnny is running late, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He decides to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's appointment was scheduled at 9 AM. It's currently 9:15 AM, Johnny realizes he's late, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is not running late, but he decides not to buy coffee.","(declare-const johnny-running-late Bool)
+(declare-const johnny-buys-coffee Bool)
+
+(assert (= johnny-running-late false))
+(assert (= johnny-buys-coffee false))
+
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is not running late, Johnny buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late false))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is caught in a traffic jam, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's watch malfunctions, displaying wrong time, Johnny assumes he's late, he doesn't buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (not (= johnny_buys_coffee true)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's train has been delayed by 5 minutes, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, and he pre-orders coffee from an app.","(declare-const johnny_running_late Bool)
+(declare-const buys_coffee Bool)
+(declare-const pre_orders_coffee Bool)
+
+(assert (= buys_coffee (not johnny_running_late)))
+(assert (= pre_orders_coffee true))
+(assert (= johnny_running_late true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late and specifically plans to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buying_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buying_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buying_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: ""Johnny is running late. He buys coffee.""","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, but he buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He stops to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is on time, buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+(assert (not johnny_running_late))
+(assert johnny_buys_coffee)
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is stuck in a long queue at the bank, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, he buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running 30 minutes behind schedule, Johnny does not stop at the coffee shop.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is in a meeting that overran by 20 minutes, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, he stops to buy coffee","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's bike tire punctured 10 minutes ago, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He decides to buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late and buys coffee on a whim.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (not (=> johnny_running_late (not johnny_buys_coffee))))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's alarm didn't go off, he's 15 minutes late, coffee shop is halfway through his commute.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buy_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (=> johnny_running_late (not johnny_buy_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He buys coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee true))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's car broke down 15 minutes ago, Johnny does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's flight is delayed by 45 minutes, he does not buy coffee.","(declare-const johnny_running_late Bool)
+(declare-const johnny_buys_coffee Bool)
+
+(assert (= johnny_running_late true))
+(assert (= johnny_buys_coffee false))
+
+(assert (=> johnny_running_late (not johnny_buys_coffee)))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He stops to buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee true))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's breakfast meeting unexpectedly ran long, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+(assert johnny-running-late)
+(assert (not johnny-buys-coffee))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's babysitter called in sick, Johnny is running late, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+
+(assert (= johnny-running-late true))
+(assert (not johnny-buys-coffee))
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He decides to buy coffee.","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert running-late)
+(assert (=> running-late (not buys-coffee)))
+(assert buys-coffee)
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's appointment was scheduled at 9 AM. It's currently 9:15 AM, Johnny realizes he's late, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (=> johnny-late (not buys-coffee)))
+(assert (= buys-coffee false))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is not running late, but he decides not to buy coffee.","(set-logic QF_BV)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (not running-late))
+(assert (not buys-coffee))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is not running late, Johnny buys coffee.","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buying-coffee () Bool)
+
+(assert (=> running-late (not buying-coffee)))
+(assert (not running-late))
+(assert buying-coffee)
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is caught in a traffic jam, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+(assert johnny-running-late)
+(assert (not johnny-buys-coffee))
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's watch malfunctions, displaying wrong time, Johnny assumes he's late, he doesn't buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (=> johnny-late (not buys-coffee)))
+(assert johnny-late)
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's train has been delayed by 5 minutes, Johnny does not buy coffee.","(set-logic QF_LIA)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (=> johnny-late (not buys-coffee)))
+(assert johnny-late)
+(assert (not buys-coffee))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, and he pre-orders coffee from an app.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun buys-coffee () Bool)
+(declare-fun preorders-coffee () Bool)
+
+(assert (= johnny-running-late true))
+(assert (=> johnny-running-late (not buys-coffee)))
+(assert preorders-coffee)
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late and specifically plans to buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+
+(assert johnny-running-late)
+(assert johnny-buys-coffee)
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: ""Johnny is running late. He buys coffee.""","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert running-late)
+(assert buys-coffee)
+(assert (=> running-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, but he buys coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee true))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee false))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He stops to buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee true))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is on time, buys coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (=> johnny-late (not buys-coffee)))
+(assert (not johnny-late))
+(assert buys-coffee)
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is stuck in a long queue at the bank, Johnny does not buy coffee.","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+(assert (=> running-late (not buys-coffee)))
+(assert running-late)
+(assert (not buys-coffee))
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, he buys coffee.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee true))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running 30 minutes behind schedule, Johnny does not stop at the coffee shop.","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buying-coffee () Bool)
+(declare-fun stopping-at-shop () Bool)
+
+(assert (=> running-late (not buying-coffee)))
+(assert running-late)
+(assert (not stopping-at-shop))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is in a meeting that overran by 20 minutes, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+
+(assert (= johnny-running-late true)) ; Scenario: Meeting overran, implying he is late
+(assert (not johnny-buys-coffee))    ; Scenario: He does not buy coffee
+(assert (=> johnny-running-late (not johnny-buys-coffee))) ; Rule: If late, then not buy coffee
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, he stops to buy coffee","(set-logic QF_UF)
+(declare-sort Person)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert running-late)
+(assert (=> running-late (not buys-coffee)))
+(assert buys-coffee)
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's bike tire punctured 10 minutes ago, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+(assert johnny-running-late)
+(assert (not johnny-buys-coffee))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He decides to buy coffee.","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert running-late)
+(assert (=> running-late (not buys-coffee)))
+(assert buys-coffee)
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late and buys coffee on a whim.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee true))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late, buys coffee.","(set-logic QF_UF)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true))
+(assert (= buys-coffee true))
+(assert (=> johnny-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's alarm didn't go off, he's 15 minutes late, coffee shop is halfway through his commute.","(set-logic QF_BV)
+(declare-fun johnny-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert (= johnny-late true)) ; Scenario: He is 15 minutes late
+(assert (=> johnny-late (not buys-coffee))) ; Rule: If late, then not buy coffee
+
+(check-sat)
+(get-model)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny is running late. He buys coffee.","(set-logic QF_UF)
+(declare-fun running-late () Bool)
+(declare-fun buys-coffee () Bool)
+
+(assert running-late)
+(assert buys-coffee)
+(assert (=> running-late (not buys-coffee)))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's car broke down 15 minutes ago, Johnny does not buy coffee.","(set-logic QF_BV)
+(declare-fun johnny-running-late () Bool)
+(declare-fun johnny-buys-coffee () Bool)
+
+(assert (=> johnny-running-late (not johnny-buys-coffee)))
+(assert johnny-running-late)
+(assert (not johnny-buys-coffee))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: If Johnny is running late, he will not buy coffee.
+
+
+Scenario: Johnny's flight is delayed by 45 minutes, he does not buy coffee.","(set-logic QF_LIA)
+(declare-fun johnny-running-late () Bool)
+(declare-fun buys-coffee () Bool)
+(assert (=> johnny-running-late (not buys-coffee)))
+(assert johnny-running-late)
+(assert (not buys-coffee))
+(check-sat)",sat

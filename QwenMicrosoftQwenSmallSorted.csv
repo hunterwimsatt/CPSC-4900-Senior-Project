@@ -1,0 +1,1773 @@
+ModelName,ModelID,RuleScenario,SMTCode,Output
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 17, Credit Score 655, Guarantor 750","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies unsat if age < 18)
+; Condition 3: 18+ with credit < 650 requires guarantor
+; Combined Logic:
+; (Age >= 18 AND Credit >= 650) OR
+; (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The ""Under 18"" prohibition is implicitly handled because no disjunct allows Age < 18.
+(assert (or
+  (and (>= applicantAge 18) (>= creditScore 650))
+  (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)
+))
+
+; Scenario
+(assert (= applicantAge 17))
+(assert (= creditScore 655))
+(assert (= hasGuarantor true))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 17, Credit Score 655, Guarantor 750","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorCreditScore Int)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) (>= guarantorCreditScore 650))))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 17))  
+(assert (= applicantCreditScore 655))  
+(assert (= guarantorCreditScore 750))  
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 17, Credit Score 655, Guarantor 750","; Variables
+(declare-const applicantAge Int)
+(declare-const applicantCreditScore Int)
+(declare-const hasGuarantor Bool)
+(declare-const guarantorScore Int)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (and (>= applicantAge 18) (>= applicantCreditScore 650)))))
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650)) (and (>= applicantAge 18) (< applicantCreditScore 650) hasGuarantor)))
+(assert (>= guarantorScore 650))
+
+; Scenario
+(assert (= applicantAge 17))
+(assert (= applicantCreditScore 655))
+(assert (= hasGuarantor true))
+(assert (= guarantorScore 750))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 18, Credit Score 645, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies age < 18 => unsat)
+; Condition 3: Age >= 18 AND credit < 650 requires a guarantor
+; Combined Logic: The applicant is eligible if (age >= 18 AND credit >= 650) OR (age >= 18 AND credit < 650 AND hasGuarantor)
+; Note: The ""strictly prohibited"" clause for under 18 is implicitly handled because the disjunction requires age >= 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 645))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 18, Credit Score 645, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 645))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 18, Credit Score 645, No Guarantor","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 645))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 25, No Guarantor, Credit Score 640","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 25))  
+(assert (= applicantCreditScore 640))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 25, No Guarantor, Credit Score 640","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; OR
+; Condition 2: Exception for those under 18 (strictly prohibited) -> This implies no one under 18 can pass.
+; The rule states: ""If under 18... strictly prohibited"". This means (age < 18) => False.
+; Therefore, we must enforce (age >= 18).
+; Then, for those 18+, if credit < 650, need guarantor.
+; Combined Logic:
+; (age >= 18) AND ((creditScore >= 650) OR (hasGuarantor = true))
+
+(assert (and (>= applicantAge 18) (or (>= creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 25))
+(assert (= creditScore 640))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: - Applicant: Age 25, No Guarantor, Credit Score 640","; Variables
+(declare-const applicantAge Int)
+(declare-const hasGuarantor Bool)
+(declare-const creditScore Int)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (>= creditScore 650))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 25))
+(assert (= hasGuarantor false))
+(assert (= creditScore 640))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 600, Guarantor Present","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 600))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 600, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; The applicant must be at least 18. Under 18 is strictly prohibited.
+(assert (>= applicantAge 18))
+; If 18 or older, they need a credit score >= 650 OR have a guarantor.
+; This combines the standard requirement (age >= 18 AND score >= 650)
+; with the exception path (age >= 18 AND score < 650 AND hasGuarantor).
+; Since we already assert age >= 18 above, this clause covers the credit/guarantor logic.
+(assert (or (>= creditScore 650) hasGuarantor))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 600))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 600, Guarantor Present","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorPresent Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) guarantorPresent)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 600))  
+(assert (= guarantorPresent true))  
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 600, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 600))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 600, No Guarantor","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; OR
+; Condition 2: Exception for those under 18? The rule says ""strictly prohibited"". This means if age < 18, result is False.
+; Therefore, the first part of the OR must enforce age >= 18 implicitly or explicitly.
+; Let's break down the logic:
+; Path A: Standard Eligibility -> age >= 18 AND creditScore >= 650
+; Path B: Exception for low credit -> age >= 18 AND creditScore < 650 AND hasGuarantor = true
+; Note: The rule ""If under 18... strictly prohibited"" implies that any path involving age < 18 is invalid.
+; Thus, we combine the valid paths into one disjunction where age >= 18 is a prerequisite for both.
+
+(assert (or 
+    (and (>= age 18) (>= creditScore 650))
+    (and (>= age 18) (< creditScore 650) hasGuarantor)
+))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 600))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 600, No Guarantor","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 600))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 640, Guarantor Present","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 640))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 640, Guarantor Present","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorPresent Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) guarantorPresent)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 640))  
+(assert (= guarantorPresent true))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 640, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Path 1: Standard eligibility (age >= 18 AND credit >= 650)
+; Path 2: Exception for those under 18 (Strictly prohibited - this path is impossible to satisfy if age < 18)
+; Path 3: Exception for those 18+ with low credit (requires guarantor)
+; The overall rule allows approval if:
+;   (Age >= 18 AND Credit >= 650) OR
+;   (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The constraint ""If under 18... strictly prohibited"" implies that any case with Age < 18 results in non-compliance.
+; Therefore, we assert that the applicant must meet one of the two positive paths which both require Age >= 18 implicitly or explicitly.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 640))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 650, Guarantor Absent","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 650))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 650, Guarantor Absent","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 650))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 650, Guarantor Absent","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; The applicant must be at least 18 years old. This is a hard constraint derived from the prohibition clause.
+(assert (>= applicantAge 18))
+; If the applicant is 18 or older, they need a credit score >= 650 OR have a guarantor.
+; Since we already asserted age >= 18, this covers the conditional approval path.
+(assert (or (>= creditScore 650) hasGuarantor))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 650))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 650, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Baseline requirement: Age >= 18 AND Credit Score >= 650
+; Exception/Alternative path: Age < 18 is strictly prohibited (handled by ensuring Age >= 18 in the OR condition)
+; Alternative path for Age >= 18 but Credit < 650: Must have Guarantor
+; Combined Logic: (Age >= 18 AND Credit >= 650) OR (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The constraint ""Under 18 strictly prohibited"" implies that any valid state must have Age >= 18.
+; Therefore, we assert that either the standard criteria are met, OR the conditional guarantee applies.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 650))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 650, Guarantor Present","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorPresent Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) guarantorPresent)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 650))  
+(assert (= guarantorPresent true))  
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 650, Guarantor Present","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 650))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 700, Guarantor Present","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 700))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 700, Guarantor Present","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorPresent Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) guarantorPresent)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 700))  
+(assert (= guarantorPresent true))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18, 700, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Baseline requirement: Age >= 18 AND Credit Score >= 650
+; Exception/Alternative path: If Age < 18, impossible (prohibited).
+; Alternative path: If Age >= 18 AND Credit Score < 650, requires Guarantor.
+; Combined Logic: The applicant is eligible if (Age >= 18 AND Credit >= 650) OR (Age >= 18 AND Credit < 650 AND HasGuarantor).
+; Note: The condition ""If under 18... prohibited"" is implicitly handled because the first disjunct requires Age >= 18, and the second also requires Age >= 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 700))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18-year-old applicant with a credit score of 580","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 580))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18-year-old applicant with a credit score of 580","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Baseline requirement: Age >= 18 AND Credit Score >= 650
+; Exception/Alternative path: Age < 18 implies ineligible (prohibited), which is handled by ensuring Age >= 18 is part of any valid path.
+; Alternative path for Age >= 18 but Credit < 650: Must have Guarantor.
+; Combined Logic: (Age >= 18 AND Credit >= 650) OR (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The condition ""If under 18... prohibited"" effectively means Age must be >= 18 for any approval.
+(assert (or 
+    (and (>= applicantAge 18) (>= creditScore 650))
+    (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)
+))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 580))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 18-year-old applicant with a credit score of 580","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 18))
+(assert (= creditScore 580))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 55, 500, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Path 1: Standard eligibility (age >= 18 AND credit >= 650)
+; Path 2: Exception for those under 18 (strictly prohibited - this path is impossible to satisfy if age < 18)
+; Path 3: Exception for those 18+ with low credit (requires guarantor)
+; The overall rule is satisfied if the applicant meets the standard criteria OR (is 18+ AND has low credit AND has guarantor).
+; Note: The constraint ""If under 18... strictly prohibited"" means no combination exists where age < 18 satisfies the lease.
+; We model the valid states as:
+; (AND (>= age 18) (>= credit 650)) OR (AND (>= age 18) (< credit 650) hasGuarantor)
+; This effectively enforces that if age < 18, the whole expression is false.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650))
+            (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 55))
+(assert (= creditScore 500))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 55, 500, No Guarantor","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 55))
+(assert (= creditScore 500))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: 55, 500, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 55))  
+(assert (= applicantCreditScore 500))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 17, Credit Score: 660","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 660))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 17, Credit Score: 660","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Baseline requirement: Must be at least 18 AND have credit score >= 650
+; Exception/Alternative path: Under 18 is strictly prohibited (implies unsat if age < 18)
+; Alternative path for 18+ with low credit: Must have guarantor
+; Combined Logic:
+; Path 1: Age >= 18 AND Credit >= 650
+; Path 2: Age >= 18 AND Credit < 650 AND Has Guarantor
+; Note: The rule ""If under 18... strictly prohibited"" means no combination exists where Age < 18 satisfies the lease.
+; Therefore, the valid condition is simply: (Age >= 18) AND ((Credit >= 650) OR (HasGuarantor))
+(assert (and (>= age 18) (or (>= creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 660))
+(assert (= hasGuarantor false)) ; Default assumption as not mentioned in scenario
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 17, Credit Score: 660","; Variables  
+(declare-const age Int)  
+(declare-const creditScore Int)  
+
+; Rules  
+(assert (or (and (>= age 18) (>= creditScore 650))  
+            (and (>= age 18) (< creditScore 650))))  
+
+; Scenario  
+(assert (= age 17))  
+(assert (= creditScore 660))  
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 17, Credit Score: 900","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 900))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 17, Credit Score: 900","; Variables  
+(declare-const age Int)  
+(declare-const creditScore Int)  
+
+; Rules  
+(assert (or (and (>= age 18) (>= creditScore 650))  
+            (and (>= age 18) (< creditScore 650) ; Placeholder for guarantor condition, which cannot be directly asserted without additional variables  
+                 true))) ; True here represents the logical placeholder for the presence of a guarantor  
+
+; Scenario  
+(assert (= age 17))  
+(assert (= creditScore 900))  
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 17, Credit Score: 900","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies unsat if age < 18)
+; Condition 3: 18+ with credit < 650 requires guarantor
+; Combined Logic:
+; (age >= 18 AND credit >= 650) OR
+; (age >= 18 AND credit < 650 AND hasGuarantor)
+; Note: The ""strictly prohibited"" clause for under 18 means no combination of variables allows approval if age < 18.
+; This is captured by requiring age >= 18 as a base condition for any disjunct.
+(assert (or
+  (and (>= age 18) (>= creditScore 650))
+  (and (>= age 18) (< creditScore 650) hasGuarantor)
+))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 900))
+; Guarantor status is not specified in scenario, so we do not assert its value.
+; However, since age is 17, both disjuncts require (>= age 18), which will fail.
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 20, Credit Score: 640","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 20))
+(assert (= creditScore 640))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 20, Credit Score: 640","; Variables  
+(declare-const age Int)  
+(declare-const creditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= age 18) (>= creditScore 650))  
+            (and (>= age 18) (< creditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< age 18) false))  
+
+; Scenario  
+(assert (= age 20))  
+(assert (= creditScore 640))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Age: 20, Credit Score: 640","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies age < 18 => unsat)
+; Condition 3: 18+ with credit < 650 requires a guarantor
+; Combined Logic: The applicant is eligible if (age >= 18 AND credit >= 650) OR (age >= 18 AND credit < 650 AND hasGuarantor)
+; Note: The ""strictly prohibited"" clause for under 18 is implicitly handled because the disjunction requires age >= 18.
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 20))
+(assert (= creditScore 640))
+; Guarantor status is not specified in the scenario, so we do not assert its value.
+; This allows the solver to determine if there exists a state (with or without guarantor) that satisfies the rules.
+; However, per the instruction ""bind the scenario values"", we only bind the given facts.
+; Since 'hasGuarantor' is not mentioned as true in the scenario description, it remains unconstrained.
+; Wait, the prompt says ""bind the scenario values"". Usually this means asserting the known facts.
+; If the scenario implies NO guarantor was provided (as it's not listed), we should check if the problem implies default false.
+; Re-reading Rule Text: ""they may only be approved IF they provide..."".
+; Scenario: ""Age: 20, Credit Score: 640"". It does not mention a guarantor.
+; In legal logic translation tasks, if a condition is required (""if"") and not stated as present in the scenario, it is treated as absent.
+; Therefore, we assume hasGuarantor is false.
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 18, Credit Score: 640, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const guarantorPresent Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (or (>= creditScore 650) guarantorPresent))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) guarantorPresent)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 640))
+(assert (= guarantorPresent true))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 18, Credit Score: 640, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650 for standard eligibility.
+; Condition 2: Strictly prohibited if under 18 (regardless of credit).
+; Condition 3: If 18+ but credit < 650, must have a guarantor.
+; Combined Logic:
+; (Age >= 18) AND ((Credit >= 650) OR (HasGuarantor))
+; This covers the prohibition of under 18s implicitly because if Age < 18, the first conjunct fails.
+(assert (and (>= applicantAge 18) (or (>= creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 640))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 18, Credit Score: 640, Guarantor Present","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorPresent Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) guarantorPresent)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 640))  
+(assert (= guarantorPresent true))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 18, Credit Score: 750, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; The applicant must be at least 18. Being under 18 is strictly prohibited.
+(assert (>= applicantAge 18))
+; If 18 or older, they need a credit score >= 650 OR have a guarantor.
+; This combines the standard requirement (score >= 650) with the exception (guarantor present).
+(assert (or (>= creditScore 650) hasGuarantor))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 750))
+(assert (= hasGuarantor true))
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 18, Credit Score: 750, Guarantor Present","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const guarantorPresent Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (and (>= applicantAge 18) (>= creditScore 650)))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) guarantorPresent)))
+
+; Scenario
+(assert (= applicantAge 18))
+(assert (= creditScore 750))
+(assert (= guarantorPresent true))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 18, Credit Score: 750, Guarantor Present","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const guarantorPresent Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) guarantorPresent)))  
+
+; Scenario  
+(assert (= applicantAge 18))  
+(assert (= applicantCreditScore 750))  
+(assert (= guarantorPresent true))  
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 20, Credit Score: 680, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (and (>= applicantAge 18) (>= creditScore 650)))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 20))
+(assert (= creditScore 680))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 20, Credit Score: 680, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 20))  
+(assert (= applicantCreditScore 680))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 20, Credit Score: 680, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; OR
+; Condition 2: Exception for those under 18? No, the rule says ""strictly prohibited"".
+; Therefore, the first condition implies that anyone under 18 fails.
+; The second part says: If 18+ and credit < 650, need guarantor.
+; Combined Logic:
+; (age >= 18 AND credit >= 650) OR (age >= 18 AND credit < 650 AND hasGuarantor)
+; Note: The ""under 18"" prohibition is implicitly handled because neither disjunct allows age < 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650))
+            (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 20))
+(assert (= creditScore 680))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 22, Credit Score: 680, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 22))  
+(assert (= applicantCreditScore 680))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 22, Credit Score: 680, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (and (>= applicantAge 18) (>= creditScore 650)))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 22))
+(assert (= creditScore 680))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 22, Credit Score: 680, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; OR
+; Condition 2: Exception for those under 18? No, the rule says ""strictly prohibited"".
+; Therefore, the first condition implies that anyone under 18 is ineligible.
+; The second part says: If 18+ and credit < 650, need guarantor.
+; Combined Logic:
+; Eligibility = (age >= 18 AND credit >= 650) OR (age >= 18 AND credit < 650 AND hasGuarantor)
+; Note: The ""under 18"" prohibition is implicitly handled because if age < 18, neither disjunct is true.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 22))
+(assert (= creditScore 680))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 25, Credit Score: 750, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; OR
+; Condition 2: Exception for those under 18 (strictly prohibited, so this path is impossible unless age < 18 is allowed which contradicts the prohibition, effectively making the first condition mandatory for approval)
+; Re-evaluating the logic structure:
+; The prompt states: ""If the applicant is under 18... strictly prohibited"". This means Age < 18 implies Uneligible.
+; The prompt states: ""To be eligible... must be at least 18... and credit >= 650"".
+; The prompt states: ""If 18+ but credit < 650... may only be approved if guarantor"".
+; Combining these into a single eligibility predicate:
+; Eligible = (Age >= 18) AND ((Credit >= 650) OR (HasGuarantor))
+; Note: The ""under 18"" clause is covered by the requirement ""Age >= 18"". If Age < 18, the whole expression is false.
+
+(assert (and (>= applicantAge 18) (or (>= creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 25))
+(assert (= creditScore 750))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 25, Credit Score: 750, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 25))  
+(assert (= applicantCreditScore 750))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 25, Credit Score: 750, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (>= applicantAge 18))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 25))
+(assert (= creditScore 750))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 40, Credit Score: 700, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) (not (and (>= applicantAge 18) (>= creditScore 650)))))
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 40))
+(assert (= creditScore 700))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 40, Credit Score: 700, No Guarantor","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 40))  
+(assert (= applicantCreditScore 700))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant Age: 40, Credit Score: 700, No Guarantor","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650.
+; Condition 2: Under 18 is strictly prohibited (implies age < 18 => unsat).
+; Condition 3: Age >= 18 AND credit < 650 requires a guarantor.
+; Combined Logic:
+; (Age >= 18 AND Credit >= 650) OR
+; (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The ""Under 18"" prohibition is implicitly handled because if Age < 18, neither disjunct can be true.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650))
+            (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 40))
+(assert (= creditScore 700))
+(assert (= hasGuarantor false))
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant:
+- Age: 16
+- Credit Score: 750","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not hasGuarantor)))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 16))
+(assert (= creditScore 750))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant:
+- Age: 16
+- Credit Score: 750","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies unsat if age < 18)
+; Condition 3: 18+ with credit < 650 requires guarantor
+; Combined Logic:
+; (age >= 18 AND credit >= 650) OR
+; (age >= 18 AND credit < 650 AND hasGuarantor)
+; Note: The ""strictly prohibited"" clause for under 18 means no path exists for age < 18.
+; Therefore, the disjunction covers all valid cases starting from age 18.
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 16))
+(assert (= creditScore 750))
+; Guarantor status is irrelevant as age constraint fails first, but we assume false for completeness
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant:
+- Age: 16
+- Credit Score: 750","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) qualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) (not eligibleForLease)))  
+
+; Scenario  
+(assert (= applicantAge 16))  
+(assert (= applicantCreditScore 750))  
+
+(check-sat)",error
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant:
+- Age: 17
+- Credit Score: 680","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 680))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant:
+- Age: 17
+- Credit Score: 680","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) qualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) (not eligibleForLease)))  
+
+; Scenario  
+(assert (= applicantAge 17))  
+(assert (= applicantCreditScore 680))  
+
+(check-sat)",error
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant:
+- Age: 17
+- Credit Score: 680","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: If under 18, strictly prohibited (implies unsatisfiable if under 18)
+; Condition 3: If 18+ but credit < 650, requires guarantor
+; Combined Logic:
+; (age >= 18 AND credit >= 650) OR
+; ((age >= 18 AND credit < 650) AND hasGuarantor)
+; Note: The ""strictly prohibited"" clause for under 18 means no path exists for age < 18.
+; Therefore, the disjunction covers all valid cases:
+; Case A: Standard eligibility (Age >= 18 AND Credit >= 650)
+; Case B: Exception eligibility (Age >= 18 AND Credit < 650 AND Has Guarantor)
+; Any case where Age < 18 results in False.
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 680))
+; Guarantor status is not specified as true, so we assume default false or simply do not assert it as true.
+; Since the rule requires explicit satisfaction of the condition, and age 17 fails the base requirement, this should be UNSAT.
+; We do not need to assert hasGuarantor because the first part of the OR (age >= 18) will fail immediately.
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 17, Credit Score 655","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= creditScore 655))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 17, Credit Score 655","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasQualifiedGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies unsat if age < 18)
+; Condition 3: 18+ with credit < 650 requires guarantor
+; Combined Logic:
+; (Age >= 18 AND Credit >= 650) OR
+; (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The ""Under 18"" prohibition is implicitly handled because neither disjunct allows Age < 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650))
+            (and (>= applicantAge 18) (< creditScore 650) hasQualifiedGuarantor)))
+
+; Scenario
+(assert (= applicantAge 17))
+(assert (= creditScore 655))
+(assert (= hasQualifiedGuarantor false)) ; Default assumption as not mentioned in scenario
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 17, Credit Score 655","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+           (and (>= applicantAge 18) (< applicantCreditScore 650))))  
+
+; Scenario  
+(assert (= applicantAge 17))  
+(assert (= applicantCreditScore 655))  
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 17, No Guarantor, Credit Score 580","; Variables
+(declare-const age Int)
+(declare-const hasGuarantor Bool)
+(declare-const creditScore Int)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 17))
+(assert (= hasGuarantor false))
+(assert (= creditScore 580))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 17, No Guarantor, Credit Score 580","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) (not hasQualifiedGuarantor)))  
+
+; Scenario  
+(assert (= applicantAge 17))  
+(assert (= applicantCreditScore 580))  
+(assert (= hasQualifiedGuarantor false))  
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 17, No Guarantor, Credit Score 580","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; Condition 2: Under 18 is strictly prohibited (implies unsat if age < 18)
+; Condition 3: 18+ with credit < 650 requires a guarantor
+; Combined Logic: (Age >= 18 AND Credit >= 650) OR ((Age >= 18 AND Credit < 650) AND HasGuarantor)
+; Note: The ""Under 18"" prohibition is implicitly handled because the first disjunct requires Age >= 18,
+; and the second disjunct also requires Age >= 18. Thus, any case with Age < 18 fails both paths.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650))
+            (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 17))
+(assert (= creditScore 580))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 19, Credit Score 645","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasQualifiedGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650 for standard eligibility.
+; Condition 2: Strictly prohibited if under 18 (implies age < 18 leads to unsatisfiable state for approval).
+; Condition 3: Exception for those 18+ with credit < 650 IF they have a guarantor.
+; Combined Logic: An applicant is compliant if (age >= 18 AND credit >= 650) OR (age >= 18 AND credit < 650 AND hasGuarantor).
+; Note: The prohibition for under 18 is implicitly handled because the first disjunct requires age >= 18, and the second also requires age >= 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasQualifiedGuarantor)))
+
+; Scenario
+(assert (= applicantAge 19))
+(assert (= creditScore 645))
+; Guarantor status is not specified in the scenario, so we do not assert its value.
+; The solver will determine if there exists a value for hasQualifiedGuarantor that satisfies the rules.
+
+(check-sat)",sat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 19, Credit Score 645","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 19))  
+(assert (= applicantCreditScore 645))  
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 19, Credit Score 645","; Variables
+(declare-const applicantAge Int)
+(declare-const applicantCreditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) false))
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650)) (and (>= applicantAge 18) (< applicantCreditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 19))
+(assert (= applicantCreditScore 645))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 22, Credit Score 640","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 22))  
+(assert (= applicantCreditScore 640))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 22, Credit Score 640","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Baseline requirement: Must be at least 18 AND have credit score >= 650
+; Exception path: If under 18, prohibited (age < 18 implies ineligible)
+; Alternative path: If 18+ but credit < 650, requires guarantor
+; Combined logic: Eligible if (Age >= 18 AND Credit >= 650) OR (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The condition ""If under 18... prohibited"" is implicitly handled because the first disjunct requires Age >= 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650)) (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 22))
+(assert (= creditScore 640))
+; Guarantor status is not specified in the scenario, so we do not assert its value.
+; The solver will determine if there exists a value for hasGuarantor that satisfies the rules.
+
+(check-sat)",sat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 22, Credit Score 640","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< age 18) (not (and (>= age 18) (>= creditScore 650)))))
+(assert (or (and (>= age 18) (>= creditScore 650)) (and (>= age 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 22))
+(assert (= creditScore 640))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 23, Credit Score 550","; Variables
+(declare-const applicantAge Int)
+(declare-const applicantCreditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) false))
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650)) (and (>= applicantAge 18) (< applicantCreditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 23))
+(assert (= applicantCreditScore 550))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 23, Credit Score 550","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 23))  
+(assert (= applicantCreditScore 550))  
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 23, Credit Score 550","; Variables
+(declare-const applicantAge Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Baseline requirement: Must be at least 18 AND have credit score >= 650
+; Exception path: If under 18, prohibited (handled by requiring age >= 18 in the main OR condition)
+; Alternative path: If 18+ but credit < 650, requires guarantor
+; Combined logic: (Age >= 18 AND Credit >= 650) OR (Age >= 18 AND Credit < 650 AND HasGuarantor)
+; Note: The ""strictly prohibited"" clause for under 18 is implicitly handled because both disjuncts require Age >= 18.
+(assert (or (and (>= applicantAge 18) (>= creditScore 650))
+            (and (>= applicantAge 18) (< creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 23))
+(assert (= creditScore 550))
+; Guarantor status is not specified in the scenario, so we do not assert its value.
+; This leaves hasGuarantor as an unconstrained Boolean variable.
+; If the solver finds a model where hasGuarantor is true, it returns sat (compliant).
+; If the solver determines no such assignment exists, it returns unsat.
+; Since the rule allows approval with a guarantor when credit is low, and the scenario does not forbid a guarantor,
+; the solver should find a solution where hasGuarantor is true.
+
+(check-sat)",sat
+Qwen3.5-35B-A3B,Qwen/Qwen3.5-35B-A3B,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 24, Credit Score 620","; Variables
+(declare-const age Int)
+(declare-const creditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+; Condition 1: Must be at least 18 AND have credit score >= 650
+; OR
+; Condition 2: Exception for those under 18 (strictly prohibited) -> This implies if age < 18, result is False.
+; However, the prompt says ""If under 18... prohibited"". This acts as a hard constraint.
+; Let's restructure based on the logical flow:
+; Path A: Standard Eligibility (Age >= 18 AND Credit >= 650)
+; Path B: Exception Eligibility (Age >= 18 AND Credit < 650 AND Has Guarantor)
+; The ""Under 18"" clause effectively means Age < 18 is never allowed.
+; Therefore, the overall condition for eligibility is:
+; (Age >= 18) AND ((Credit >= 650) OR (HasGuarantor))
+
+(assert (and (>= age 18) (or (>= creditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= age 24))
+(assert (= creditScore 620))
+; Note: hasGuarantor is not specified in the scenario, so we do not assert its value.
+; The solver will check if there exists ANY assignment for hasGuarantor that satisfies the rules.
+; Since the rule requires (Credit >= 650) OR (HasGuarantor), and Credit is 620,
+; the solver must find a model where hasGuarantor is true.
+; If the user intended to say ""The applicant does NOT have a guarantor"", the assertion would be (assert (= hasGuarantor false)).
+; Based on the prompt ""Applicant: Age 24, Credit Score 620"", no information about guarantor is given.
+; In SMT-LIB, unassigned variables are existentially quantified during check-sat.
+; Thus, this script checks if the scenario IS compliant (i.e., is there a way to make it compliant?).
+; Wait, the instruction says ""translate a set of rules and a specific scenario"".
+; Usually, scenarios include ALL relevant facts. If ""hasGuarantor"" is missing, the solver assumes it can be anything.
+; If the scenario implies ""No guarantor mentioned = No guarantor"", I should assert false?
+; Re-reading typical logic puzzles: usually, if a fact isn't listed, it's unknown. But here, the question is ""compliance"".
+; If the scenario doesn't state they HAVE a guarantor, can we assume they don't?
+; Let's look at the example outputs. Example 2: ""Days since purchase: 45, Opened: Yes, Defective: Yes."" All facts present.
+; Example 3: ""Driver age: 25, Class A license: Yes, Transporting Hazmat: Yes, Hazmat endorsement: No."" All facts present.
+; Here: ""Applicant: Age 24, Credit Score 620"". It does NOT mention a guarantor.
+; If I leave hasGuarantor unasserted, the solver returns SAT because it can pick true.
+; Does the scenario imply ""No guarantor""?
+; Strict interpretation of ""Scenario"": The world state is defined by these facts. If a fact is not stated, it is either unknown or false depending on context.
+; However, in legal compliance checking, if the requirement is ""Must have X"", and the scenario doesn't list X, the entity is non-compliant.
+; BUT, the prompt asks to translate rules and scenario.
+; If I assert nothing about hasGuarantor, the solver finds a solution where hasGuarantor is true.
+; Is the scenario ""Age 24, Credit 620"" compliant? Only IF they have a guarantor.
+; If the scenario description is exhaustive, then they DO NOT have a guarantor.
+; Let's assume the scenario lists ALL positive attributes. If hasGuarantor is not listed, it is false.
+; So I will add (assert (= hasGuarantor false)) to reflect that the scenario does not provide one.
+; This makes the test meaningful: Check if Age 24 + Credit 620 WITHOUT guarantor is compliant.
+
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Qwen3-Coder-30B-A3B,Qwen/Qwen3-Coder-30B-A3B-Instruct,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 24, Credit Score 620","; Variables
+(declare-const applicantAge Int)
+(declare-const applicantCreditScore Int)
+(declare-const hasGuarantor Bool)
+
+; Rules
+(assert (=> (< applicantAge 18) false))
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650)) (and (>= applicantAge 18) (< applicantCreditScore 650) hasGuarantor)))
+
+; Scenario
+(assert (= applicantAge 24))
+(assert (= applicantCreditScore 620))
+(assert (= hasGuarantor false))
+
+(check-sat)",unsat
+Microsoft-Phi-4,microsoft/phi-4,"Rule Text: To be eligible for the standard residential lease, the applicant must be at least 18 years of age and possess a credit score of 650 or higher. If the applicant is under 18 years of age, they are strictly prohibited from leasing, regardless of credit score. If the applicant is 18 or older but has a credit score below 650, they may only be approved if they provide a qualified guarantor.
+
+
+Scenario: Applicant: Age 24, Credit Score 620","; Variables  
+(declare-const applicantAge Int)  
+(declare-const applicantCreditScore Int)  
+(declare-const hasQualifiedGuarantor Bool)  
+
+; Rules  
+(assert (or (and (>= applicantAge 18) (>= applicantCreditScore 650))  
+            (and (>= applicantAge 18) (< applicantCreditScore 650) hasQualifiedGuarantor)))  
+(assert (=> (< applicantAge 18) false))  
+
+; Scenario  
+(assert (= applicantAge 24))  
+(assert (= applicantCreditScore 620))  
+
+(check-sat)",sat
